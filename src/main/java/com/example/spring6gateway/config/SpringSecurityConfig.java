@@ -1,19 +1,32 @@
 package com.example.spring6gateway.config;
 
+import org.springframework.boot.actuate.autoconfigure.security.reactive.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.server.SecurityWebFilterChain;
-import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers;
 
 @Configuration
 public class SpringSecurityConfig {
+
+    //http://localhost:8080/actuator/health
+    @Bean
+    @Order(1)
+    public SecurityWebFilterChain actuatorSecurityFilterChain(ServerHttpSecurity http) throws Exception {
+        http.securityMatcher(EndpointRequest.toAnyEndpoint())
+                .authorizeExchange(authorize -> authorize.anyExchange().permitAll());
+
+        return http.build();
+    }
+
     //Below code is modified to allow authencation via both, Http Basic and OAuth2.
     @Bean
+    @Order(2)
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity httpSecurity){
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
