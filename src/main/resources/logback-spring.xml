@@ -1,0 +1,10 @@
+<!-- This xml file is created so generate the JSON output of the logs using LogStash -->
+<configuration>
+    <appender name="jsonConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="jsonConsoleAppender" />
+    </root>
+</configuration>

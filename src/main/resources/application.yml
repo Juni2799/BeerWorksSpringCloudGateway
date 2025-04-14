@@ -35,6 +35,12 @@ management:
     livenessstate:
       enabled: true
 
+
+### Enable log tracing for LogBook
+logging:
+  level:
+    org.zalando.logbook: trace
+
 # ENABLE BELOW FOR TROUBLESHOOTING
 #      httpserver:
 #        wiretap: true
